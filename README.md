@@ -24,13 +24,17 @@ In more detailed terms, you have the following network topology components:
 
    This laptop is behind a firewall and is hosting a service (like a rails app) that needs to be accessed externally via an URL like http://rail.mydomain.org.
 
+## Configure dynamic DNS
+
+This configuration will depend on your dynamic DNS service.  Basically, you want to add some domains to your domain provider which then points them to your dynamic DNS provider which then points them to your house's external IP.
+
 ## Computer at home: Configuration
 
 1. Configure your home's router to forward ports 22 and 80 to your computer.
 
 2. Clone this repo to your computer.
 
-3. Install Docker on your computer.
+3. Install Docker on your computer if you don't already have it.
 
 4. Configure ssh on your computer to allow non-localhost connections to be forwards through reverse ssh tunnels.
 
@@ -232,9 +236,11 @@ In more detailed terms, you have the following network topology components:
 
    Note that any http requests sent to this computer using a hostname that is not being proxied will simply be handled directly by nginx.  It is configured to host any content found in the `html` directory of this project.
 
-8. Start a service ON YOUR LAPTOP which you want to be proxied by the computer at your house.  For example, I'll be running a rails app on port 3000.
+## Share a service from your laptop
 
-9. Open a reverse ssh tunnel from your laptop to the computer at your house.  Execute the following ON YOUR LAPTOP:
+1. Start a service ON YOUR LAPTOP which you want to be proxied by the computer at your house.  For example, I'll be running a rails app on port 3000.
+
+2. Open a reverse ssh tunnel from your laptop to the computer at your house.  Execute the following ON YOUR LAPTOP:
 
    ```bash
    $ ssh user@home.mydomain.org -R 0.0.0.0:3000:127.0.0.1:3000
